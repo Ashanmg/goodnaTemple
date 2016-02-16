@@ -16,6 +16,7 @@ public class GoodnaTemple {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-    }
-    
+        MainFrame MF = new MainFrame();
+        MF.setVisible(true);
+    }    
 }
