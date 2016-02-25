@@ -118,7 +118,61 @@ public class DbOperation {
             
     }
     
+    /*
     
+    */
     
+    public boolean updateDevoteeDetails(Denotee dv){
+        
+        int contct =Integer.parseInt(dv.getContact());
+        int ID =Integer.parseInt(dv.getDenoteeID());  
+        try {
+            con=(Connection) DriverManager.getConnection(url, username, password);
+            String query="UPDATE denoteedetail SET firstname='"+dv.getFirstname()+"',lastname='"+dv.getLastname()+"',address='"+dv.getAddress()+"',d_type='"+dv.getType()+"',date='"+dv.getDate()+"',contact='"+contct+"' WHERE denotee_ID='"+ID+"'";
+            pst = (PreparedStatement) con.prepareStatement(query);
+            
+            pst.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("exception --->" + e);
+            return false;
+        }finally{
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    pst.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+    
+    public boolean deleteDevoteeDetails(Denotee dv){
+        
+        int ID =Integer.parseInt(dv.getDenoteeID());
+        try {
+            con=(Connection) DriverManager.getConnection(url, username, password);
+            String query="DELETE FROM denoteedetail WHERE denotee_ID='"+ID+"'";
+            pst = (PreparedStatement) con.prepareStatement(query);
+            
+            pst.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("exception --->" + e);
+            return false;
+        }finally{
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    pst.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
     
 }
