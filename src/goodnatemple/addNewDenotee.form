@@ -85,8 +85,8 @@
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel6" min="-2" pref="122" max="-2" attributes="0"/>
-                                          <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
-                                          <Component id="txtContact" min="-2" pref="301" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                                          <Component id="txtContact" min="-2" pref="298" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel10" min="-2" pref="120" max="-2" attributes="0"/>
@@ -184,7 +184,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

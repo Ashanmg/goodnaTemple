@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -66,6 +67,57 @@ public class DbOperation {
             }
         }
     }
+    
+    /*
+    From this get Devotee details method we are going to 
+    execute query for display detail in a table acording to 
+    there columns...
+    this method pass resultset array to the constructor of the view details class.
+    */
+    
+    public ResultSet getDevoteeDetails(){
+        try {
+            
+            con=(Connection) DriverManager.getConnection(url, username, password);
+            String query = "SELECT denotee_ID,firstname,lastname,address,d_type,date,contact FROM denoteedetail";
+            pst = (PreparedStatement) con.prepareStatement(query);
+            
+            rs = pst.executeQuery();
+            return rs;
+            
+        } catch (Exception e) {
+            System.out.println("exception --->" + e);
+            //JOptionPane.showMessageDialog(null, "there is a wrong connecting with DataBase");
+            return null;
+        }
+        
+    }
+    
+    /*
+    From this filtered details method we are going to reset the table
+    as user need in search table row with firstname of the devotee details.
+    ..........
+    So in this method sorted and only display the devotee who is call
+    by name that entered that textfield.
+    ..........
+    From this method easy to find data.
+    */
+    
+    public ResultSet filteredDetails(String Fname){
+        try {
+            con=(Connection) DriverManager.getConnection(url, username, password);
+            String query = "SELECT denotee_ID,firstname,lastname,address,d_type,date,contact FROM denoteedetail WHERE firstname LIKE '%"+Fname+"%'";
+            pst = (PreparedStatement) con.prepareStatement(query);
+            
+            rs = pst.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            System.out.println("exception --->" + e);
+            return null;
+        }
+            
+    }
+    
     
     
     
