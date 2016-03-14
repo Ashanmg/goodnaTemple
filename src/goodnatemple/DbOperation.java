@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +24,9 @@ public class DbOperation {
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    static String UserName;
+    static String Password;
+   
     
     /*
     addDenotee method fill DB using data that customer entered
@@ -34,7 +38,7 @@ public class DbOperation {
     input values.
     
     */
-    public boolean addDenotee(Denotee d) {
+    public boolean addDevotee(Denotee d) {
         try {
             con = (Connection) DriverManager.getConnection(url, username, password);
             String query = "INSERT INTO denoteedetail VALUES (?,?,?,?,?,?,?,?)";
@@ -119,6 +123,8 @@ public class DbOperation {
     }
     
     /*
+    From this method we passed denotee class object and update details 
+    according to the change.
     
     */
     
@@ -149,6 +155,14 @@ public class DbOperation {
         }
     }
     
+    /*
+    From this method we passed denotee class object and deleate raw by raw
+    details that user slected as his/her wish.
+    according to the change.
+    
+    */
+    
+    
     public boolean deleteDevoteeDetails(Denotee dv){
         
         int ID =Integer.parseInt(dv.getDenoteeID());
@@ -172,6 +186,175 @@ public class DbOperation {
                 }
             } catch (Exception e) {
             }
+        }
+    
+    }
+    
+    /*
+    here We check matching of entered details according 
+    to the database. So we passed given username and password
+    from user and using those details check that they are valid 
+    and match....
+    then return int according to that happens.
+    .......
+    */
+    
+    int checkUsernamePassword(String username,String password){
+        try {
+            con=DriverManager.getConnection(url, this.username, this.password);
+            String quary="SELECT username,password FROM user";
+            pst=(PreparedStatement) con.prepareStatement(quary);
+            rs=pst.executeQuery();
+            
+            while(rs.next()){
+                if(rs.getString(1).equals(username) & rs.getString(2).equals(password)){
+                    UserName=username;
+                    Password=password;
+                    return 1;
+                }
+            }return 0;
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return 2;
+        }finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }     
+    }
+    
+    
+    /****************************************************************************************************************/
+    /****************************************************************************************************************/
+    /****************************************************************************************************************/
+    
+    /*
+    From here......
+    We wirte methods for connect details with sending email part
+    of the project...
+    These method given below for get and send email to the devotee who 
+    should be informed for armsgiving or special ocation.
+    .................
+    .................
+    */
+    
+    
+    // this method return an array which is containing userID username, password and email.
+    // this email method is used for login the system.
+    
+    String[] getEmailInfo(String username1){
+        
+        
+         String[] Array=new String[5];
+        try {
+            con=DriverManager.getConnection(url, this.username, this.password);
+            String quary="SELECT user_ID,username,password,user_Email  FROM user WHERE username='"+username1+"'";
+            pst=(PreparedStatement) con.prepareStatement(quary);
+            rs=pst.executeQuery();
+            
+            if(rs.next()){
+                
+                Array[0] = rs.getString(1);
+                Array[1] = rs.getString(2);
+                Array[2] = rs.getString(3);
+                Array[3] = rs.getString(4);
+                
+            };
+            
+            return Array;
+            
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return  null;
+        }finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }     
+        
+    }
+    
+    
+    String[] getUser(){
+        try {
+            String[] Array = new String[100];
+            con=DriverManager.getConnection(url, username, password);
+            String quary="SELECT username FROM user ";
+            pst=(PreparedStatement) con.prepareStatement(quary);
+            rs=pst.executeQuery();
+            int i=0;
+            while(rs.next()){
+                Array[i]=(rs.getString(1));
+                i+=1;
+            }
+            return Array;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return null;
+        }
+        finally {
+
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                
+                if (con != null) {
+                    con.close();
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }   
+    }
+    
+    
+    int SerachUsername(String username){
+        String arr[]=getUser();
+        int check=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            if(username.equals(arr[i])){
+                check=1;
+                break;
+            }
+            else{
+                check=0;
+            }
+        }
+        return check;
+        
+    }
+    
+    ResultSet getAllEmailAddress(){
+        try {
+            con=DriverManager.getConnection(url, this.username, this.password);
+            String quary="SELECT email FROM denoteedetail";
+            pst=(PreparedStatement) con.prepareStatement(quary);
+            rs=pst.executeQuery();
+            System.out.println(rs);
+            return rs;
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            return  null;
         }
     }
     

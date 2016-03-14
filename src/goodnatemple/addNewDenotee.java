@@ -5,6 +5,7 @@
  */
 package goodnatemple;
 
+import java.text.DateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,7 +32,7 @@ public class addNewDenotee extends javax.swing.JFrame {
         txtfistname.setText("");
         txtLastname.setText("");
         txtAddress.setText("");
-        txtDate.setText("");
+        txtdatechooser.setDate(null);
         txtContact.setText("");
         txtEmail.setText("");
     }
@@ -52,13 +53,13 @@ public class addNewDenotee extends javax.swing.JFrame {
         txtLastname = new javax.swing.JTextField();
         txtAddress = new javax.swing.JTextField();
         txtType = new javax.swing.JComboBox();
-        txtDate = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
         txtContact = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        txtdatechooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,8 +165,8 @@ public class addNewDenotee extends javax.swing.JFrame {
                                         .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(110, 110, 110)
-                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(113, 113, 113)
+                                        .addComponent(txtdatechooser, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(110, 110, 110)
@@ -214,12 +215,13 @@ public class addNewDenotee extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtdatechooser, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,11 +284,11 @@ public class addNewDenotee extends javax.swing.JFrame {
         denotee.setLastname(txtLastname.getText());
         denotee.setAddress(txtAddress.getText());
         denotee.setType(dd);
-        denotee.setDate(txtDate.getText());
+        denotee.setDate(DateFormat.getDateInstance().format(txtdatechooser.getDate()));
         denotee.setContact(txtContact.getText());
         denotee.setEmail(txtEmail.getText());
         
-        boolean result=dbops.addDenotee(denotee);
+        boolean result=dbops.addDevotee(denotee);
         
         if(result){
             JOptionPane.showMessageDialog(this, "Denotee details successfully inserted.");
@@ -348,10 +350,10 @@ public class addNewDenotee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtContact;
-    private javax.swing.JFormattedTextField txtDate;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLastname;
     private javax.swing.JComboBox txtType;
+    private com.toedter.calendar.JDateChooser txtdatechooser;
     private javax.swing.JTextField txtfistname;
     // End of variables declaration//GEN-END:variables
 }
